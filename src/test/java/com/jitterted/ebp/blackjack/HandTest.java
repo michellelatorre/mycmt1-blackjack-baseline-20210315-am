@@ -30,4 +30,5 @@ public class HandTest {
             .isEqualTo(1 + 8 + 3);
     }
 
+
 }
