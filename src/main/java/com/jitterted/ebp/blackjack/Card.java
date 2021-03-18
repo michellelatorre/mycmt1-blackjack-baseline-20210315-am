@@ -6,11 +6,7 @@ import static org.fusesource.jansi.Ansi.ansi;
 
 public class Card {
     private final Suit suit;
-    private final String rank;
-
-    public Card(String suit, String rank) {
-        this(Suit.fromString(suit), rank);
-    }
+    private final String rank; //primitive obsession
 
     public Card(Suit suit, String rank) {
         this.suit = suit;
@@ -39,15 +35,14 @@ public class Card {
             , rank);
         lines[6] = "└─────────┘";
 
-        Ansi.Color cardColor = getAnsiColor();
         return ansi()
-            .fg(cardColor).toString()
+            .fg(getCardColor()).toString()
             + String.join(ansi().cursorDown(1)
                                 .cursorLeft(11)
                                 .toString(), lines);
     }
 
-    private Ansi.Color getAnsiColor() {
+    private Ansi.Color getCardColor() {
         return suit.isRed() ? Ansi.Color.RED : Ansi.Color.BLACK;
     }
 
