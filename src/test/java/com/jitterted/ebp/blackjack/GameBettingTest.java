@@ -16,7 +16,7 @@ public class GameBettingTest {
     @Test
     void testPlayerDeposits25ThenTheBalanceIs25() {
         Game game = new Game();
-        game.playerDeposits(25);
+        game.player.playerDeposits(25);
         int balance = game.playerBalance();
         assertThat(balance).isEqualTo(25);
     }
@@ -24,8 +24,8 @@ public class GameBettingTest {
     @Test
     void testPlayerWith100BalanceBets75ThenTheBalanceIs25() {
         Game game = new Game();
-        game.playerDeposits(100);
-        game.playerBets(75);
+        game.player.playerDeposits(100);
+        game.player.playerBets(75);
         int balance = game.playerBalance();
         assertThat(balance).isEqualTo(25);
     }
@@ -33,9 +33,9 @@ public class GameBettingTest {
     @Test
     void testPlayerWith100Bets50AndWinsThenBalanceIs150() {
         Game game = new Game();
-        game.playerDeposits(100);
-        game.playerBets(50);
-        game.playerWins();
+        game.player.playerDeposits(100);
+        game.player.playerBets(50);
+        game.player.playerWins();
         int balance = game.playerBalance();
         assertThat(balance).isEqualTo(100 - 50 + 100);
     }
@@ -43,9 +43,9 @@ public class GameBettingTest {
     @Test
     void testPlayerWith50Bets25AndLosesThenTheBalance25() {
         Game game = new Game();
-        game.playerDeposits(50);
-        game.playerBets(25);
-        game.playerLoses();
+        game.player.playerDeposits(50);
+        game.player.playerBets(25);
+        game.player.playerLoses();
         int balance = game.playerBalance();
         assertThat(balance).isEqualTo(50 - 25);
     }
@@ -53,10 +53,10 @@ public class GameBettingTest {
     @Test
     void testPlayerBetsTwiceAndWinsThenTheBalanceIs150() {
         Game game = new Game();
-        game.playerDeposits(50);
-        game.playerBets(25);
-        game.playerBets(25);
-        game.playerWins();
+        game.player.playerDeposits(50);
+        game.player.playerBets(25);
+        game.player.playerBets(25);
+        game.player.playerWins();
         int balance = game.playerBalance();
         assertThat(balance).isEqualTo(100);
     }
@@ -64,8 +64,8 @@ public class GameBettingTest {
     @Test
     void testPlayerWith50Bets5TimesExceededTheAmount() {
         Game game = new Game();
-        game.playerDeposits(50);
-        assertThatThrownBy(() -> game.playerBets(1000))
+        game.player.playerDeposits(50);
+        assertThatThrownBy(() -> game.player.playerBets(1000))
             .isInstanceOf(IllegalStateException.class);
     }
 
@@ -73,39 +73,39 @@ public class GameBettingTest {
     @Test
     void testPlayerDeposits50bets25bets30() {
         Game game = new Game();
-        game.playerDeposits(50);
-        game.playerBets(25);
-        assertThatThrownBy(() -> game.playerBets(30))
+        game.player.playerDeposits(50);
+        game.player.playerBets(25);
+        assertThatThrownBy(() -> game.player.playerBets(30))
             .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
     void testPlayerWith75Bets50AndPushesThenBalanceIs75() {
         Game game = new Game();
-        game.playerDeposits(75);
-        game.playerBets(50);
+        game.player.playerDeposits(75);
+        game.player.playerBets(50);
 
-        game.playerPushes();
+        game.player.playerPushes();
         assertThat(game.playerBalance()).isEqualTo(75);
     }
 
     @Test
     void testPlayerWith200Bets100AndWinsBlackJackThenBalance350() {
         Game game = new Game();
-        game.playerDeposits(200);
-        game.playerBets(100);
+        game.player.playerDeposits(200);
+        game.player.playerBets(100);
 
-        game.playerWinsBlackjack();
+        game.player.playerWinsBlackjack();
         assertThat(game.playerBalance()).isEqualTo(200 - 100 + ((int)(100 * 2.5)));
     }
 
     @Test
     void testPlayerHas50Bets25WinsCanBet75() {
         Game game = new Game();
-        game.playerDeposits(50);
-        game.playerBets(25);
-        game.playerWins();
-        game.playerBets(75);
+        game.player.playerDeposits(50);
+        game.player.playerBets(25);
+        game.player.playerWins();
+        game.player.playerBets(75);
         assertThat(game.playerBalance()).isEqualTo(50 - 25 + (25 * 2) - 75);
     }
 }

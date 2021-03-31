@@ -12,8 +12,7 @@ public class Game {
 
     private final Hand playerHand = new Hand();
     private final Hand dealerHand = new Hand();
-    private int playerBalance;
-    private int betAmount;
+    final Player player = new Player();
 
     public static void main(String[] args) {
         showIntroductoryScreen();
@@ -94,20 +93,20 @@ public class Game {
     private void displayOutcome(boolean playerBusted) {
         if (playerBusted) {
             System.out.println("You Busted, so you lose.  💸");
-            playerLoses();
+            player.playerLoses();
         } else if (dealerHand.isBusted()) {
             System.out.println("Dealer went BUST, Player wins! Yay for you!! " +
                 "💵");
-            playerWins();
+            player.playerWins();
         } else if (playerHand.beats(dealerHand)) {
             System.out.println("You beat the Dealer! 💵");
-            playerWins();
+            player.playerWins();
         } else if (dealerHand.isPushedWith(playerHand)) {
             System.out.println("Push: The house wins, you Lose. 💸");
-            playerPushes();
+            player.playerPushes();
         } else {
             System.out.println("You lost to the Dealer. 💸");
-            playerLoses();
+            player.playerLoses();
         }
     }
 
@@ -171,36 +170,6 @@ public class Game {
     }
 
     public int playerBalance() {
-        return playerBalance;
-    }
-
-    public void playerDeposits(int i) {
-        this.playerBalance = i;
-    }
-
-    public void playerBets(int i) {
-        assertSufficientFunds(i);
-        this.playerBalance -= i;
-        this.betAmount += i;
-    }
-
-    private void assertSufficientFunds(int i) {
-        if (i > playerBalance) throw new IllegalStateException();
-    }
-
-    public void playerWins() {
-        this.playerBalance += betAmount * 2;
-    }
-
-    public void playerLoses() {
-        this.playerBalance += betAmount * 0;
-    }
-
-    public void playerPushes() {
-        this.playerBalance += betAmount * 1;
-    }
-
-    public void playerWinsBlackjack() {
-        this.playerBalance += betAmount * 2.5;
+        return player.getPlayerBalance();
     }
 }
