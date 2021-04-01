@@ -4,6 +4,10 @@ public class Player {
     private int playerBalance;
     private int betAmount;
     private int totalAmountBet;
+    private int bonus;
+
+    private static final int BONUS_AMOUNT = 10;
+    private static final int AMOUNT_QUALIFIED_FOR_BONUS = 100;
 
     public Player() {
     }
@@ -33,6 +37,7 @@ public class Player {
         this.playerBalance = playerBalance - i;
         this.betAmount += i;
         this.totalAmountBet += i;
+        addBonusWhenBetAmountIsQualified(i);
     }
 
     public void playerPushes() {
@@ -45,5 +50,15 @@ public class Player {
 
     public int totalAmountBet() {
         return totalAmountBet;
+    }
+
+    public int getPlayerBonus() {
+        return bonus;
+    }
+
+    private void addBonusWhenBetAmountIsQualified(int i) {
+        if (i >= AMOUNT_QUALIFIED_FOR_BONUS) {
+            this.bonus += BONUS_AMOUNT;
+        }
     }
 }

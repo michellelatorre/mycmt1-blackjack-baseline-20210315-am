@@ -152,4 +152,41 @@ public class PlayerTest {
         assertThat(playerBalance).isEqualTo(100 - totalBetAmount);
     }
 
+    @Test
+    void testPlayerNoBonusForBetsLessThan100() {
+        Player player = new Player();
+        player.playerDeposits(100);
+        player.playerBets(50);
+        int playerBonus = player.getPlayerBonus();
+        assertThat(playerBonus).isEqualTo(0);
+    }
+
+    @Test
+    void testPlayerGetsBonus10ForBetting100() {
+        Player player = new Player();
+        player.playerDeposits(100);
+        player.playerBets(100);
+        int playerBonus = player.getPlayerBonus();
+        assertThat(playerBonus).isEqualTo(10);
+    }
+
+    @Test
+    void testPlayerGets20BonusForBetting100Twice() {
+        Player player = new Player();
+        player.playerDeposits(200);
+        player.playerBets(100);
+        player.playerBets(100);
+        int playerBonus = player.getPlayerBonus();
+        assertThat(playerBonus).isEqualTo(10*2);
+    }
+
+    @Test
+    void testPlayerGets10BonusForBetting200Once() {
+        Player player = new Player();
+        player.playerDeposits(200);
+        player.playerBets(200);
+        int playerBonus = player.getPlayerBonus();
+        assertThat(playerBonus).isEqualTo(10);
+    }
+
 }
