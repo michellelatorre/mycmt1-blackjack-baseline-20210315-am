@@ -94,4 +94,62 @@ public class PlayerTest {
         assertThat(balance).isEqualTo(100 - 100 + (100 * 0));
     }
 
+    @Test
+    void testGetTotalBetAmountIsZeroWhenPlayerHasNoBetsYet() {
+        Player player = new Player();
+        int totalBetAmount = player.totalAmountBet();
+        assertThat(totalBetAmount).isZero();
+    }
+
+    @Test
+    void testGetTotalBetAmountIsSameWithAmountThatPlayerBet() {
+        Player player = new Player();
+        player.playerDeposits(10);
+        player.playerBets(5);
+        int totalBetAmount = player.totalAmountBet();
+        assertThat(totalBetAmount).isEqualTo(5);
+    }
+
+    @Test
+    void testGetTotalBetAmountIsCorrectForMultipleBets() {
+        Player player = new Player();
+        player.playerDeposits(200);
+        player.playerBets(5);
+        player.playerBets(10);
+        player.playerBets(20);
+        int totalBetAmount = player.totalAmountBet();
+        assertThat(totalBetAmount).isEqualTo(5 + 10 + 20);
+    }
+
+    @Test
+    void testGetTotalBetAmountIsUnchangedWhenPlayerWins() {
+        Player player = new Player();
+        player.playerDeposits(50);
+        player.playerBets(10);
+        player.playerWins();
+        int totalBetAmount = player.totalAmountBet();
+        assertThat(totalBetAmount).isEqualTo(10);
+    }
+
+    @Test
+    void testGetTotalBetAmountIsUnchangedWhenPlayerLosses() {
+        Player player = new Player();
+        player.playerDeposits(50);
+        player.playerBets(10);
+        player.playerLoses();
+        int totalBetAmount = player.totalAmountBet();
+        assertThat(totalBetAmount).isEqualTo(10);
+    }
+
+    @Test
+    void testGetTotalBetAmountSubtractFromPlayerBalance() {
+        Player player = new Player();
+        player.playerDeposits(100);
+        player.playerBets(50);
+        player.playerBets(50);
+        int totalBetAmount = player.totalAmountBet();
+        int playerBalance = player.getPlayerBalance();
+        assertThat(playerBalance).isEqualTo(100 - totalBetAmount);
+    }
+
 }

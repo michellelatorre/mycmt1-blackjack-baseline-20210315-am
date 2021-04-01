@@ -3,6 +3,7 @@ package com.jitterted.ebp.blackjack;
 public class Player {
     private int playerBalance;
     private int betAmount;
+    private int totalAmountBet;
 
     public Player() {
     }
@@ -31,6 +32,7 @@ public class Player {
         assertSufficientFunds(i);
         this.playerBalance = playerBalance - i;
         this.betAmount += i;
+        this.totalAmountBet += i;
     }
 
     public void playerPushes() {
@@ -39,5 +41,9 @@ public class Player {
 
     public void playerWinsBlackjack() {
         this.playerBalance = (int) (playerBalance + betAmount * 2.5);
+    }
+
+    public int totalAmountBet() {
+        return totalAmountBet;
     }
 }
